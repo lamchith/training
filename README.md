@@ -1,1 +1,1 @@
-Changes fr training
+Changes accessing in memory DB
