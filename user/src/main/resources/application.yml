@@ -5,10 +5,12 @@ server:
 spring:
     cloud:
         function:
-            definition: receiveMessage
+            definition: receiveMessage;produceMessage
         stream:
             bindings:
-                sendCommunication-out-0:
+                # following used from  @GetMapping("/message/{id}")
+                # User Contoller
+                produceMessage-out-0:
                     destination: my-topic
 
                 receivemessage-in-0:
@@ -16,6 +18,8 @@ spring:
                     group: my-consumer-group
             kafka:
                 binder:
+                    configuration:
+                        key.serializer: org.apache.kafka.common.serialization.StringSerializer
                     brokers:
                         - localhost:9092
 
@@ -38,3 +42,16 @@ spring:
         hibernate:
             ddl-auto: update
         show-sql: true
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+
+
+    endpoint:
+            health:
+                   show-details: always
+            metrics:
+                show-details: always
+

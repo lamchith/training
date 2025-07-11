@@ -5,8 +5,13 @@ import com.example.user.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.http.ResponseEntity;
+import org.springframework.integration.support.MessageBuilder;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -17,14 +22,14 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("api/v1")
 @RequiredArgsConstructor
 public class UserController {
 
 
 
 
-    private final StreamBridge streamBridge;
+
 
     private final UserService userService;
 
@@ -40,6 +45,8 @@ public class UserController {
 
     @GetMapping("/user")
     public String getUser(){
+
+        log.debug("call to api/v1/user");
 
         //userMap.put("Arun",new User(1,"Arun"));
       //  return (List<User>) userMap.values().;
@@ -58,23 +65,6 @@ public class UserController {
 
     }
 
-    @GetMapping("/message/{id}")
-    public void sentMessage(@PathVariable String id ){
-
-     //   var accountsMsgDto = new AccountsMsgDto(account.getAccountNumber(), customer.getName(),
-      //          customer.getEmail(), customer.getMobileNumber());
-      //  log.info("Sending Communication request for the details: {}", accountsMsgDto);
-        var result = streamBridge.send("sendCommunication-out-0", "what is happening "+id);
-        log.info("Is the Communication request successfully triggered ? : {}", result);
-
-        //return Flux.fromIterable(listOfUser) ;
-
-
-
-
-
-
-    }
 
 
 
