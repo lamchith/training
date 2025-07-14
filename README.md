@@ -1,1 +1,1 @@
-git aChanges accessing in memory DB
+Changes accessing in memory DB
